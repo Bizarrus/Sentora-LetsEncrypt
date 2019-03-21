@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updateserver>
+	<latestversion>100</latestversion>
+	<downloadurl>http://sentcrypt.tk/letsencrypt.zpp</downloadurl>
+	<desc>Add Let's Encrypt certificates to your domain</desc>
+	<updatedesc>First Let's Encrypt release</updatedesc>
+	<authorname>Adrian Preuß</authorname>
+	<authoremail>bizarrus@icloud.com</authoremail>
+	<authorurl>http://www.sentora.org</authorurl>
+	<ostype>lin</ostype>
+</updateserver>

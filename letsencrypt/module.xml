@@ -3,9 +3,12 @@
     <name>Let's Encrypt</name>
     <version>100</version>
     <defaultcat>Domain Management</defaultcat>
+	<type>user</type>
+	<ostype>lin</ostype>
     <desc>Add Let's Encrypt certificates to your domain</desc>
     <authorname>Adrian Preuß</authorname>
     <authoremail>bizarrus@icloud.com</authoremail>
     <authorurl>https://github.com/Bizarrus/Sentora-LetsEncrypt</authorurl>
-    <updateurl>sentcrypt.tk</updateurl>
+    <updateurl>http://sentcrypt.tk/letsencrypt.zpp</updateurl>
+	<downloadurl>http://sentcrypt.tk/letsencrypt.zpp</downloadurl>
 </module>
