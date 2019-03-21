@@ -1,4 +1,4 @@
-# ![Icon](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/1.0.0/letsencrypt/assets/icon.png) Sentora-LetsEncrypt
+# ![Icon](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/master/letsencrypt/assets/icon.png) Sentora-LetsEncrypt
 Add Let's Encrypt certificates to your domain
 
 ## Installation
@@ -8,3 +8,6 @@ zppy update
 
 zppy install letsencrypt
 ```
+
+## Screenshot
+![Screenshot](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/master/screenshots/preview.png)
