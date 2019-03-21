@@ -6,6 +6,7 @@ Add Let's Encrypt certificates to your domain
 - [x] ✳️ Request new SSL Certificates
 - [x] 🚫 Revoke SSL Certificates
 - [ ] 🔄 Renew SSL Certificates
+- [ ] ✴️ Wildcard Certificates
 
 ## 🔨 Installation
 ```bash
