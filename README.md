@@ -1,4 +1,4 @@
-# ![Icon](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/master/letsencrypt/assets/icon.png) Sentora-LetsEncrypt
+# ![Icon](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/master/letsencrypt/assets/icon.png) Let's Encrypt for Sentora
 Add Let's Encrypt certificates to your domain
 
 ## Installation
