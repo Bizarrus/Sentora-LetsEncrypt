@@ -1,0 +1,11 @@
+# START - Let's Encrypt
+<IfModule mod_ssl.c>
+	SSLEngine On
+	SSLCertificateFile $PATH$USER/letsencrypt/$DOMAIN.fullchain
+	SSLCertificateKeyFile $PATH$USER/letsencrypt/$DOMAIN.rsa
+
+	SSLProtocol All -SSLv2 -SSLv3
+	SSLHonorCipherOrder on
+	SSLCipherSuite "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+AESGCM EECDH EDH+AESGCM EDH+aRSA HIGH !MEDIUM !LOW !aNULL !eNULL !LOW !RC4 !MD5 !EXP !PSK !SRP !DSS"
+</IfModule>
+# END - Let's Encrypt

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <name>Let's Encrypt</name>
+    <version>100</version>
+    <defaultcat>Domain Management</defaultcat>
+    <desc>Add Let's Encrypt certificates to your domain</desc>
+    <authorname>Adrian Preuß</authorname>
+    <authoremail>bizarrus@icloud.com</authoremail>
+    <authorurl>https://github.com/Bizarrus/Sentora-LetsEncrypt</authorurl>
+    <updateurl>sentcrypt.tk</updateurl>
+</module>

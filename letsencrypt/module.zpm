@@ -1,0 +1,57 @@
+<div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
+    <div class="panel-heading">
+        <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>" />
+        <div class="zmodule_title">
+            <@ ModuleName @>
+        </div>
+        <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>"><@ ModuleDesc @></div>
+    </div>
+	
+	<@ Result @>
+	
+	<% if SSLEnabled %>
+		<% if DomainList %>
+			<div class="zgrid_wrapper">
+				<form action="./?module=letsencrypt&action=Update" method="post">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Domain name</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% loop DomainList %>
+								<tr>
+									<td><a href="https://<& domain &>" target="_blank"><& domain &></a></td>
+									<td>
+										<& status &>
+									</td>
+									<td>
+										<& actions &>
+									</td>
+								</tr>
+							<% endloop %>
+						</tbody>
+					</table>
+					<@ CSFR_Tag @>
+				</form>
+			</div>
+		<% else %>
+			<div class="zgrid_wrapper">
+				<h3><: No available Domains :></h3>
+				<p>They have not created any domains yet. Please create a domain or subdomain first.</p>
+				<a href="./?module=domains" class="btn btn-primary">Create Domain</a>
+				<a href="./?module=sub_domains" class="btn btn-primary">Create Subdomain</a>
+			</div>
+		<% endif %>
+	<% else %>
+		<div class="alert alert-block alert-danger notice-manager-alert">
+			<h4>Warning:</h4>
+			<p>SSL is currently disabled by the server!</p>
+			<% if Admin %>
+				<p>The Apache-Mod <strong>mod_ssl</strong> is not installed or disabled.</p>
+			<% endif %>
+		</div>
+	<% endif %>
+</div>
