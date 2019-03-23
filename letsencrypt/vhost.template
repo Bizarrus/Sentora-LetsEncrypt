@@ -1,7 +1,8 @@
 # START - Let's Encrypt
 <IfModule mod_ssl.c>
 	SSLEngine On
-	SSLCertificateFile $PATH$USER/letsencrypt/$DOMAIN.fullchain
+	SSLCertificateFile $PATH$USER/letsencrypt/$DOMAIN.cert
+	SSLCertificateChainFile $PATH$USER/letsencrypt/$DOMAIN.chain
 	SSLCertificateKeyFile $PATH$USER/letsencrypt/$DOMAIN.rsa
 
 	SSLProtocol All -SSLv2 -SSLv3
