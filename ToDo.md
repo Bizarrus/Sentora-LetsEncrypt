@@ -1,0 +1,9 @@
+# Current ToDo
+- Domain Settings (forece SSL Redirect or not)
+- Show / Download Certificate
+- User can select the bit-strength of RSA (default: 2048), see ACMECert generateRSAKey($bits=2048)
+- If wildcard revoked, delete all VHost settings on subdomains
+- Cronjob: If wildcard created, add VHost settings on subdomains
+- Fix initial Tab (See [Issue #2](https://github.com/Bizarrus/Sentora-LetsEncrypt/issues/2))
+- Autoresolve `Listen` config-entry on Port `443` (See [Issue #1](https://github.com/Bizarrus/Sentora-LetsEncrypt/issues/1))
+- Adding `CAA` DNS Entry for `letsencrypt.org` (admin can enable/disable these feature, users can (if enabled) disable it, See [http://forums.sentora.org/showthread.php?pid=30406#pid30406](http://forums.sentora.org/showthread.php?pid=30406#pid30406))
