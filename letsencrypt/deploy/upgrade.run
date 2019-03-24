@@ -1,0 +1,81 @@
+<?php
+	require_once(dirname(dirname(__FILE__)) . '/code/Installer.php');
+	
+	$installer = new Installer();
+	
+	/* Database Tables */
+	$installer->addTable('x_letsencrypt', [
+		'le_id_pk'			=> 'ID',
+		'le_username'		=> 'STRING',
+		'le_domain'			=> 'STRING',
+		'le_time_created'	=> 'DATETIME',
+		'le_time_finished'	=> 'DATETIME'
+	]);
+	
+	/* Subdomain Validations */
+	if(!$installer->settingsExists('letsencrypt_domain_validation')) {
+		$installer->addSettings([
+			'so_id_pk'				=> NULL,
+			'so_name_vc'			=> 'letsencrypt_domain_validation',
+			'so_cleanname_vc'		=> 'Domain Validation',
+			'so_value_tx'			=> 'fetch',
+			'so_defvalues_tx'		=> 'fetch',
+			'so_desc_tx'			=> 'Domain names will be checked',
+			'so_module_vc'			=> 'Let\'s Encrypt Config',
+			'so_usereditable_en'	=> 'false'
+		]);
+	}
+	
+	if(!$installer->settingsExists('letsencrypt_tld_list_cache')) {
+		$installer->addSettings([
+			'so_id_pk'				=> NULL,
+			'so_name_vc'			=> 'letsencrypt_tld_list_cache',
+			'so_cleanname_vc'		=> 'TLD List Cache',
+			'so_value_tx'			=> 'true',
+			'so_defvalues_tx'		=> 'true',
+			'so_desc_tx'			=> 'Enables the TLD List Cache, if Domain Validation is set to Fetch TLD List',
+			'so_module_vc'			=> 'Let\'s Encrypt Config',
+			'so_usereditable_en'	=> 'false'
+		]);
+	}
+	
+	/* Permissions */
+	if(!$installer->settingsExists('letsencrypt_permission_single')) {
+		$installer->addSettings([
+			'so_id_pk'				=> NULL,
+			'so_name_vc'			=> 'letsencrypt_permission_single',
+			'so_cleanname_vc'		=> 'Single-Domain',
+			'so_value_tx'			=> 'true',
+			'so_defvalues_tx'		=> 'true',
+			'so_desc_tx'			=> 'If it\'s enabled, user can create Single-Domain certificates',
+			'so_module_vc'			=> 'Let\'s Encrypt Config',
+			'so_usereditable_en'	=> 'false'
+		]);
+	}
+	
+	if(!$installer->settingsExists('letsencrypt_permission_wildcard')) {
+		$installer->addSettings([
+			'so_id_pk'				=> NULL,
+			'so_name_vc'			=> 'letsencrypt_permission_wildcard',
+			'so_cleanname_vc'		=> 'Wildcard',
+			'so_value_tx'			=> 'false',
+			'so_defvalues_tx'		=> 'false',
+			'so_desc_tx'			=> 'If it\'s enabled, user can create Wildcard certificates',
+			'so_module_vc'			=> 'Let\'s Encrypt Config',
+			'so_usereditable_en'	=> 'false'
+		]);
+	}
+	
+	if(!$installer->settingsExists('letsencrypt_permission_wildcard_subdomains')) {
+		$installer->addSettings([
+			'so_id_pk'				=> NULL,
+			'so_name_vc'			=> 'letsencrypt_permission_wildcard_subdomains',
+			'so_cleanname_vc'		=> 'Subdomains',
+			'so_value_tx'			=> 'false',
+			'so_defvalues_tx'		=> 'false',
+			'so_desc_tx'			=> 'If it\'s enabled, user can create Wildcard certificates for Subdomains',
+			'so_module_vc'			=> 'Let\'s Encrypt Config',
+			'so_usereditable_en'	=> 'false'
+		]);
+	}
+?>

@@ -1,3 +1,83 @@
+<style>
+	/* Fix bad behavior of styling */
+	.active {
+		color: inherit;
+	}
+	
+	.actions {
+		width: 200px;
+		min-width: 200px !important;
+		max-width: 300px !important;
+	}
+	
+	.status {
+		width: 250px;
+		min-width: 200px !important;
+		max-width: 300px !important;
+	}
+	
+	div#settings[role="tabpanel"],
+	div#single[role="tabpanel"],
+	div#wildcard[role="tabpanel"] {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+	
+	.zgrid_wrapper.alerts {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	
+	.table thead > tr.first > th,
+	.table tbody > tr.first > th,
+	.table thead > tr.first > td,
+	.table tbody > tr.first > td {
+		border-top: inherit;
+	}
+	
+	.nav-tabs > li:first-child {
+		margin-left: 10px;
+	}
+	
+	.nav-tabs > li:last-child {
+		margin-right: 10px;
+	}
+	
+	.tab-pane {
+		margin-bottom: 0px;
+	}
+
+	div.panel-heading:not(:first-child) {
+		border-top: 2px solid #DDDDDD;
+		border-radius: inherit;
+		margin-top: -1px;
+	}
+	
+	.zmodule_content.panel {
+		padding-bottom: 0px;
+	}
+
+	.buttons td {
+		background-color: inherit !important;
+	}
+	
+	.no-domains {
+		margin-bottom: 25px;
+	}
+	
+	th.icon {
+		width: 30px;
+		text-align: center;
+		padding: 15px 0px 15px 10px !important;
+	}
+	
+	th.icon img {
+		min-width: 24px;
+	}
+</style>
+<script type="text/javascript">
+	let nameservers = {};
+</script>
 <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
     <div class="panel-heading">
         <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>" />
@@ -9,49 +89,370 @@
 	
 	<@ Result @>
 	
-	<% if SSLEnabled %>
-		<% if DomainList %>
-			<div class="zgrid_wrapper">
-				<form action="./?module=letsencrypt&action=Update" method="post">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Domain name</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<% loop DomainList %>
-								<tr>
-									<td><a href="https://<& domain &>" target="_blank"><& domain &></a></td>
-									<td>
-										<& status &>
-									</td>
-									<td>
-										<& actions &>
-									</td>
-								</tr>
-							<% endloop %>
-						</tbody>
-					</table>
-					<@ CSFR_Tag @>
-				</form>
-			</div>
-		<% else %>
-			<div class="zgrid_wrapper">
-				<h3><: No available Domains :></h3>
-				<p>They have not created any domains yet. Please create a domain or subdomain first.</p>
-				<a href="./?module=domains" class="btn btn-primary">Create Domain</a>
-				<a href="./?module=sub_domains" class="btn btn-primary">Create Subdomain</a>
+	<% if NotAvailablePermissions %>
+		<% if Admin %>
+			<div class="row">
+				<ul class="nav nav-tabs" role="tablist">
+					<% if PermissionSingleOption %>
+						<li role="presentation"<% if IsSingleTab %> class="active"<% endif %>>
+							<a href="#single" aria-controls="single" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/single.png"> <: Single-Domain :></a>
+						</li>
+					<% endif %>
+					<% if PermissionWildcardOption %>
+						<li role="presentation"<% if IsWildcardTab %> class="active"<% endif %>>
+							<a href="#wildcard" aria-controls="wildcard" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/wildcard.png"> <: Wildcard :></a>
+						</li>
+					<% endif %>
+					<% if Admin %>
+						<li role="presentation" class="pull-right<% if IsSettingsTab %> active<% endif %>">
+							<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/settings.png"> <: Settings :></a>
+						</li>
+					<% endif %>
+				</ul>
 			</div>
 		<% endif %>
 	<% else %>
-		<div class="alert alert-block alert-danger notice-manager-alert">
-			<h4>Warning:</h4>
-			<p>SSL is currently disabled by the server!</p>
+		<div class="row">
+			<ul class="nav nav-tabs" role="tablist">
+				<% if PermissionSingleOption %>
+					<li role="presentation"<% if IsSingleTab %> class="active"<% endif %>>
+						<a href="#single" aria-controls="single" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/single.png"> <: Single-Domain :></a>
+					</li>
+				<% endif %>
+				<% if PermissionWildcardOption %>
+					<li role="presentation"<% if IsWildcardTab %> class="active"<% endif %>>
+						<a href="#wildcard" aria-controls="wildcard" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/wildcard.png"> <: Wildcard :></a>
+					</li>
+				<% endif %>
+				<% if Admin %>
+					<li role="presentation" class="pull-right<% if IsSettingsTab %> active<% endif %>">
+						<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><img src="modules/letsencrypt/assets/settings.png"> <: Settings :></a>
+					</li>
+				<% endif %>
+			</ul>
+		</div>
+	<% endif %>
+	
+	<% if SSLEnabled %>
+		<div class="tab-content">
+			<% if PermissionSingleOption %>
+				<div role="tabpanel" class="tab-pane<% if IsSingleTab %> active<% endif %>" id="single">
+					<% if SingleDomainList %>
+						<div class="zgrid_wrapper">
+							<form action="./?module=letsencrypt&action=Update&tab=single" method="post">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><: Domain name :></th>
+											<th class="status"><: Status :></th>
+											<th class="actions"><: Actions :></th>
+										</tr>
+									</thead>
+									<tbody>
+										<% loop SingleDomainList %>
+											<tr>
+												<td><a href="https://<& domain &>" target="_blank"><& domain &></a></td>
+												<td class="status">
+													<& status &>
+												</td>
+												<td class="actions text-right">
+													<& actions &>
+												</td>
+											</tr>
+										<% endloop %>
+									</tbody>
+								</table>
+								<@ CSFR_Tag @>
+							</form>
+						</div>
+					<% else %>
+						<div class="zgrid_wrapper alerts">
+							<br />
+							<div class="alert alert-block alert-warning">
+								<h4><: No available certificates :></h4>
+								<p><: You have currently no certificates created. :></p>
+							</div>
+						</div>
+					<% endif %>
+				</div>
+			<% endif %>
+			
+			<% if PermissionWildcardOption %>
+				<div role="tabpanel" class="tab-pane<% if IsWildcardTab %> active<% endif %>" id="wildcard">
+					<% if WildcardDomainList %>
+						<div class="zgrid_wrapper">
+							<form action="./?module=letsencrypt&action=Update&tab=wildcard" method="post">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><: Wildcard Domain name :></th>
+											<th class="status"><: Status :></th>
+											<th class="actions"><: Actions :></th>
+										</tr>
+									</thead>
+									<tbody>
+										<% loop WildcardDomainList %>
+											<tr>
+												<td>*.<& domain &></td>
+												<td class="status">
+													<& status &>
+												</td>
+												<td class="actions text-right">
+													<& actions &>
+												</td>
+											</tr>
+										<% endloop %>
+									</tbody>
+								</table>
+								<@ CSFR_Tag @>
+							</form>
+						</div>
+					<% else %>
+						<div class="zgrid_wrapper alerts">
+							<br />
+							<div class="alert alert-block alert-warning">
+								<h4><: No available Wildcard Domains :></h4>
+								<p><: You have currently no wildcard domains created. :></p>
+							</div>
+						</div>
+					<% endif %>
+				</div>
+			<% endif %>
+			
 			<% if Admin %>
-				<p>The Apache-Mod <strong>mod_ssl</strong> is not installed or disabled.</p>
+				<div role="tabpanel" class="tab-pane<% if IsSettingsTab %> active<% endif %>" id="settings">
+					<form action="./?module=letsencrypt&action=UpdateSettings&tab=settings" method="post">
+						<table class="table table-striped">
+							<tbody>
+								<tr valign="top" class="first">
+									<th class="icon">
+										<img src="modules/letsencrypt/assets/validity.png">
+									</th>
+									<th colspan="3">
+										<h4><: Subdomain Validations :></h4>
+									</th>
+								</tr>
+								<tr valign="top" class="first">
+									<td class="icon"></td>
+									<th nowrap="nowrap"><: Validation Type :>:</th>
+									<td>
+										<select name="domain_validation" id="domain_validation">
+											<option value="fetch"<% if DomainValidationOptionFetch %> selected="selected"<% endif %>><: TLD List :></option>
+											<option value="database"<% if DomainValidationOptionDatabase %> selected="selected"<% endif %>><: Database :></option>
+										</select>
+									</td>
+									<td><: Domain names will be checked by selected validation type :></td>
+								</tr>
+								<tr>
+									<td class="icon"></td>
+									<th><: Caching (for TLD List) :>:</th>
+									<td>
+										<input type="checkbox" name="list_cache"<% if TLDListCacheOption %> CHECKED<% endif %> />
+									</td>
+									<td><: Enable or Disable the TLD List requests for one week. :></td>
+								</tr>
+								
+								<tr valign="top" class="first">
+									<th class="icon">
+										<img src="modules/letsencrypt/assets/permissions.png">
+									</th>
+									<th colspan="3">
+										<h4><: Permissions :></h4>
+									</th>
+								</tr>
+								<tr>
+									<td class="icon"></td>
+									<th><: Single-Domain :>:</th>
+									<td>
+										<input type="checkbox" name="permission_single"<% if PermissionSingleOption %> CHECKED<% endif %>/>
+									</td>
+									<td><: If it's enabled, user can create Single-Domain certificates :></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="warning text-center">
+										<strong class="text-danger">EXPERIMENTAL WILDCARD FEATURES</strong>
+									</td>
+								</tr>
+								<tr class="warning">
+									<td class="icon"></td>
+									<th class="warning"><: Wildcard :>: </th>
+									<td>
+										<input type="checkbox" name="permission_wildcard"<% if PermissionWildcardOption %> CHECKED<% endif %> />
+									</td>
+									<td><: If it's enabled, user can create Wildcard certificates :></td>
+								</tr>
+								<tr class="warning">
+									<td class="icon"></td>
+									<th class="warning"><: Subdomains :>:</th>
+									<td>
+										<input type="checkbox" name="permission_wildcard_subdomains"<% if PermissionWildcardSubdomainOption %> CHECKED<% endif %> />
+									</td>
+									<td><: If it's enabled, user can create Wildcard certificates for Subdomains :></td>
+								</tr>
+								
+								<tr class="buttons">
+									<td colspan="4" class="text-center">
+										<button class="button-loader btn btn-primary" type="submit" id="button" name="action" value="save"><: Save Changes :></button>
+										<button class="button-loader btn btn-default" type="submit" id="button" name="action" value="cancel"><: Cancel :></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<@ CSFR_Tag @>
+					</form>
+				</div>
+			<% endif %>
+			
+			<% if NotAvailablePermissions %>
+				<div class="zgrid_wrapper alerts">
+					<br />
+					<div class="alert alert-block alert-warning">
+						<h4><: Feature disabled :></h4>
+						<p><: This feature is currently disabled. :></p>
+					</div>
+				</div>
+			<% else %>
+				<% if HasAndyDomains %>
+					<div class="panel-heading" id="title">
+						<img src="modules/letsencrypt/assets/add.png" width="35" height="35" border="0" alt="<: Add :>" />
+						<div class="zmodule_title description_single">
+							<: Add a Single-Domain :>
+						</div>
+						<div class="zmodule_title hidden description_wildcard">
+							<: Add a Wildcard-Domain :>
+						</div>
+						<div class="zmodule_desc description_single">
+							<: Add the selected Domain as an Single-Domain certificate :>
+						</div>
+						<div class="zmodule_desc hidden description_wildcard">
+							<: Add the selected Domain as an Wildcard certificate :>
+						</div>
+					</div>
+				<% endif %>
+				
+				<div id="domain_list" class="row<% if IsSettingsTab %> hidden<% endif %>">
+					<% if DisabledDomainList %>
+						<div class="zgrid_wrapper">
+							<form action="./?module=letsencrypt&action=Update" method="post">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><: Domain name :></th>
+											<th><: Nameservers :></th>
+											<th class="actions"><: Actions :></th>
+										</tr>
+									</thead>
+									<tbody>
+										<% loop DisabledDomainList %>
+											<tr>
+												<td><& domain &></td>
+												<td>
+													<script type="text/javascript">
+														nameservers['<& domain &>'] = <& nameservers &>;
+													</script>
+													<small class="nameserver" data-domain="<& domain &>">View</small>
+												</td>
+												<td class="actions text-right">
+													<& actions &>
+												</td>
+											</tr>
+										<% endloop %>
+									</tbody>
+								</table>
+								
+								<% if IsSingleTab %>
+									<input type="hidden" name="tab" value="single" />
+								<% endif %>
+								
+								<% if IsWildcardTab %>
+									<input type="hidden" name="tab" value="wildcard" />
+								<% endif %>
+								
+								<@ CSFR_Tag @>
+							</form>
+						</div>
+					<% else %>
+						<div class="zgrid_wrapper alerts no-domains">
+							<h3><: No available Domains :></h3>
+							<p><: They have not available domains yet. Please create a domain or subdomain first. :></p>
+							<br />
+							<div class="text-center">
+								<a href="./?module=domains" class="btn btn-primary"><: Create Domain :></a>
+								<a href="./?module=sub_domains" class="btn btn-primary"><: Create Subdomain :></a>
+							</div>
+						</div>
+					<% endif %>
+				</div>
+			<% endif %>
+		</div>
+	<% else %>
+		<br />
+		<div class="alert alert-block alert-danger notice-manager-alert">
+			<h4><: Warning: :></h4>
+			<p><: SSL is currently disabled by the server! :></p>
+			<% if Admin %>
+				<p><: The Apache-Mod mod_ssl is not installed or disabled. :></p>
 			<% endif %>
 		</div>
 	<% endif %>
 </div>
+<script type="text/javascript">
+	(function($) {
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			$('button#create').each(function(index, button) {
+				if(e.target.href.indexOf('#wildcard') > -1) {
+					$('div.description_single').addClass('hidden');
+					$('div.description_wildcard').removeClass('hidden');
+					$('input[name="tab"]').val('wildcard');
+				} else {
+					$('div.description_single').removeClass('hidden');
+					$('div.description_wildcard').addClass('hidden');
+					$('input[name="tab"]').val('single');
+				}
+			});
+		
+			if(e.target.href.indexOf('#settings') > -1) {
+				$('div#domain_list, div#title').addClass('hidden');
+			} else {
+				$('div#domain_list, div#title').removeClass('hidden');
+			}
+		});
+		
+		let _watcher = setInterval(function() {
+			if(typeof($.fn.popover) !== 'underline') {
+				clearInterval(_watcher);
+				
+				$('small.nameserver').popover({
+					animation:	true,
+					html:		true,
+					placement:	'top',
+					trigger:	'hover',
+					title:		function() {
+						return '<: Nameserver from :> ' + $(this).data('domain');
+					},
+					content:	function() {
+						let domain		= $(this).data('domain');
+						let nameserver	= nameservers[domain];
+						let html		= '';
+						
+						if(nameserver.valid) {
+							html = '<small class="text-success">The nameserver entry is <strong>valid</strong>.</small>';
+						} else {
+							html = '<small class="text-danger">The domain ' + domain + ' is not managed by the nameserver <strong>' + nameserver.needed.join(', ') + '</strong>!</small>';
+						}
+						
+						if(nameserver.entries.length === 0) {
+							html += '<br /><strong>No Nameservers given!</strong>';
+						} else {
+							nameserver.entries.forEach(function(entry, index) {
+								html += '<br /><small><strong>NS ' + (index + 1) + ':</strong> <span>' + entry + '</span></small>';
+							});
+						}
+						
+						return html;
+					}
+				});
+			}
+		}, 500);
+	}(jQuery));
+</script>

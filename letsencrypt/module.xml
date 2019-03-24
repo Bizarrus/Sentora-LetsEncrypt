@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     <name>Let's Encrypt</name>
-    <version>101</version>
+    <version>104</version>
     <defaultcat>Domain Management</defaultcat>
 	<type>user</type>
 	<ostype>lin</ostype>

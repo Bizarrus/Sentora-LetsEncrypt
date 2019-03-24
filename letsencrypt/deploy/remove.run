@@ -1,0 +1,32 @@
+<?php
+	require_once(dirname(dirname(__FILE__)) . '/code/Installer.php');
+	
+	$installer = new Installer();
+	
+	/* Database Tables */
+	$installer->removeTable('x_letsencrypt');
+	
+	/* Subdomain Validations */
+	if($installer->settingsExists('letsencrypt_domain_validation')) {
+		$installer->removeSettings('letsencrypt_domain_validation');
+	}
+	
+	if($installer->settingsExists('letsencrypt_tld_list_cache')) {
+		$installer->removeSettings('letsencrypt_tld_list_cache');
+	}
+	
+	/* Permissions */
+	if($installer->settingsExists('letsencrypt_permission_single')) {
+		$installer->removeSettings('letsencrypt_permission_single');
+	}
+	
+	if($installer->settingsExists('letsencrypt_permission_wildcard')) {
+		$installer->removeSettings('letsencrypt_permission_wildcard');
+	}
+	
+	if($installer->settingsExists('letsencrypt_permission_wildcard_subdomains')) {
+		$installer->removeSettings('letsencrypt_permission_wildcard_subdomains');
+	}
+	
+	/* Restore all Domains */
+?>
