@@ -7,3 +7,4 @@
 - Fix initial Tab (See [Issue #2](https://github.com/Bizarrus/Sentora-LetsEncrypt/issues/2))
 - Autoresolve `Listen` config-entry on Port `443` (See [Issue #1](https://github.com/Bizarrus/Sentora-LetsEncrypt/issues/1))
 - Adding `CAA` DNS Entry for `letsencrypt.org` (admin can enable/disable these feature, users can (if enabled) disable it, See [http://forums.sentora.org/showthread.php?pid=30406#pid30406](http://forums.sentora.org/showthread.php?pid=30406#pid30406))
+- Remove certificates if domain was deleted (`OnAfterDeleteDomain.hook.php`)
