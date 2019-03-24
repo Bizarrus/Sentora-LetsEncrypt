@@ -49,9 +49,9 @@ zppy upgrade letsencrypt
 > 
 > 💥 **Informations**
 > 
-> > The `Wildcard`feature is currently not fully implemented and it's marked as an **EXPERIMENTAL FEATURE**!
-> > The problem is, that the cronjob must currently running up to the deployment process of DNS entries. The Wildcard-Features are currently not usable, by default.
-> >
-> > Following **ToDo**s are currently under development:
-> > - If wildcard revoked, delete all VHost settings on subdomains
-> > - Cronjob: If wildcard created, add VHost settings on subdomains
+> The `Wildcard`feature is currently not fully implemented and it's marked as an **EXPERIMENTAL FEATURE**!
+> The problem is, that the cronjob must currently running up to the deployment process of DNS entries. The Wildcard-Features are currently not usable, by default.
+> 
+> Following **ToDo**s are currently under development:
+> - If wildcard revoked, delete all VHost settings on subdomains
+> - Cronjob: If wildcard created, add VHost settings on subdomains
