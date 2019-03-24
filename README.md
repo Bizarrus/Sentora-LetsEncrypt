@@ -16,6 +16,13 @@ zppy update
 zppy install letsencrypt
 ```
 
+## ♻️ Upgrade
+```bash
+zppy update
+
+zppy upgrade letsencrypt
+```
+
 ## 📐Screenshots
 ![Screenshot](https://raw.githubusercontent.com/Bizarrus/Sentora-LetsEncrypt/master/screenshots/preview.png)
 
@@ -36,7 +43,7 @@ zppy install letsencrypt
 > - ✔️ UI: adding Tabs for normal certificates and wildcard certificates
 > - ✔️ UI: change alerts depends on their state (error, info, success,...)
 > - ✔️ Fix VHost template with chain file for a valid SSL configuration
-> - 💥 **EXPERIMENTAL:** Create Wildcard support
+> - ⚠️ **EXPERIMENTAL:** Create Wildcard support
 > - ✔️ Check Nameserver on DNS for wildcard domains
 > - ✔️ Permissions: enable/disable wildcards or single-domains
 > 
