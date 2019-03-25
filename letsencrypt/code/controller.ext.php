@@ -585,7 +585,7 @@
 			
 			
 			if(!self::HasSentoraDNS($domain)) {
-				self::$result = ui_language::translate(sprintf('You can\'t create a Wildcard certificate for this domain. Please set the Nameserver to <strong>%s</strong>!', implode(', ', [
+				self::$result = ui_language::translate(sprintf('You can\'t create a wildcard certificate for this domain. Please set the Nameserver to <strong>%s</strong>!', implode(', ', [
 					'ns1.' . $domain,
 					'ns2.' . $domain
 				])));
@@ -777,52 +777,52 @@
 		static function getResult() {
 			switch(self::$result) {
 				case 'CREATED':
-					return ui_sysmessage::shout(ui_language::translate('The SSL certificat has been created.'), 'alert-success');
+					return ui_sysmessage::shout(ui_language::translate('The SSL certificate has been created.'), 'alert-success');
 				break;
 				case 'WILDCARD_CREATED':
-					return ui_sysmessage::shout(ui_language::translate('The Wildcard certificat has been requested. It takes up to 24 hours for the wildcard certificate to be delivered.'), 'alert-success');
+					return ui_sysmessage::shout(ui_language::translate('The wildcard certificate has been requested. It can take up to 24 hours for the wildcard certificate to be delivered.'), 'alert-success');
 				break;
 				case 'WILDCARD_ALREADY_EXISTS':
-					return ui_sysmessage::shout(ui_language::translate('The Wildcard certificat all ready exists.'), 'notice');
+					return ui_sysmessage::shout(ui_language::translate('The wildcard certificate already exists.'), 'notice');
 				break;
 				case 'WILDCARD_ALREADY_REQUESTED':
-					return ui_sysmessage::shout(ui_language::translate('The Wildcard certificat has already been requested.'), 'notice');
+					return ui_sysmessage::shout(ui_language::translate('The wildcard certificate has already been requested.'), 'notice');
 				break;
 				case 'ALREADY_EXISTS':
-					return ui_sysmessage::shout(ui_language::translate('The SSL certificat all ready exists.'), 'notice');
+					return ui_sysmessage::shout(ui_language::translate('The SSL certificate already exists.'), 'notice');
 				break;
 				case 'REVOKED_NOT_EXISTS':
-					return ui_sysmessage::shout(ui_language::translate('You can\'t revoke the Certificate, it doesnt exists.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('You can\'t revoke the certificate as it doesn\'t exist.'), 'alert-error');
 				break;
 				case 'CREATED_ACCOUNT_ERROR':
 					return ui_sysmessage::shout(ui_language::translate('Problem with Let\'s Encrypt registration.'), 'alert-error');
 				break;
 				case 'CREATED_FAILED':
-					return ui_sysmessage::shout(ui_language::translate('Error by retrieving the Let\'s Encrypt certificate.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('Error retrieving the Let\'s Encrypt certificate.'), 'alert-error');
 				break;
 				case 'WILDCARD_CREATED_FAILED':
-					return ui_sysmessage::shout(ui_language::translate('Error by retrieving the Let\'s Encrypt WWildcard certificate.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('Error retrieving the Let\'s Encrypt wildcard certificate.'), 'alert-error');
 				break;
 				case 'REVOKED':
-					return ui_sysmessage::shout(ui_language::translate('The SSL certificat has been revoked.'), 'alert-success');
+					return ui_sysmessage::shout(ui_language::translate('The SSL certificate has been revoked.'), 'alert-success');
 				break;
 				case 'REVOKE_FAILED':
-					return ui_sysmessage::shout(ui_language::translate('The SSL certificat can\'t revoke: internal Error.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('The SSL certificate can\'t be revoked. There was an internal error.'), 'alert-error');
 				break;
 				case 'RENEWED_NOT_EXISTS':
-					return ui_sysmessage::shout(ui_language::translate('You can\'t renew the Certificate, it doesnt exists.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('You can\'t renew the certificate as it doesn\'t exist.'), 'alert-error');
 				break;
 				case 'RENEWED':
 					return ui_sysmessage::shout(ui_language::translate('The certificate was renewed successfully.'), 'alert-success');
 				break;
 				case 'RENEWED_FAILED':
-					return ui_sysmessage::shout(ui_language::translate('The certificate cant be renewed.'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('The certificate can\'t be renewed.'), 'alert-error');
 				break;
 				case 'SETTINGS_SAVED':
-					return ui_sysmessage::shout(ui_language::translate('The settings has been saved.'), 'alert-success');
+					return ui_sysmessage::shout(ui_language::translate('The settings have been saved.'), 'alert-success');
 				break;
 				case 'PERMISSION_DENIED':
-					return ui_sysmessage::shout(ui_language::translate('You have no rights for these action!'), 'alert-error');
+					return ui_sysmessage::shout(ui_language::translate('You do not have permission to perform this action!'), 'alert-error');
 				break;
 				default:
 					if(!empty(self::$result)) {
