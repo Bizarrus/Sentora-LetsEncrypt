@@ -170,7 +170,7 @@
 							<br />
 							<div class="alert alert-block alert-warning">
 								<h4><: No available certificates :></h4>
-								<p><: You have currently no certificates created. :></p>
+								<p><: You currently have no certificates created. :></p>
 							</div>
 						</div>
 					<% endif %>
@@ -212,7 +212,7 @@
 							<br />
 							<div class="alert alert-block alert-warning">
 								<h4><: No available Wildcard Domains :></h4>
-								<p><: You have currently no wildcard domains created. :></p>
+								<p><: You currently have no wildcard domains created. :></p>
 							</div>
 						</div>
 					<% endif %>
@@ -374,7 +374,7 @@
 					<% else %>
 						<div class="zgrid_wrapper alerts no-domains">
 							<h3><: No available Domains :></h3>
-							<p><: They have not available domains yet. Please create a domain or subdomain first. :></p>
+							<p><: There are no available domains yet. Please create a domain or subdomain first. :></p>
 							<br />
 							<div class="text-center">
 								<a href="./?module=domains" class="btn btn-primary"><: Create Domain :></a>
