@@ -83,7 +83,7 @@
 							$this->output('Valid until: ' . date('m/d/Y - H:i:s', $time), $indent = 3);
 							$this->output('In Days: ' . ((int) $days), $indent = 3);
 							
-							if($days <= 0.01) {
+							if($days <= 30) {
 								$this->output('Certificate will be runs out, renewing,...', $indent = 3);
 								
 								$register = $this->letsencrypt->register($domain->ac_user_vc, $domain->ac_email_vc);
