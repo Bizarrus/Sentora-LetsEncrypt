@@ -322,10 +322,10 @@
 							<: Add a Wildcard-Domain :>
 						</div>
 						<div class="zmodule_desc description_single">
-							<: Add the selected Domain as an Single-Domain certificate :>
+							<: Add the selected Domain as a Single-Domain certificate :>
 						</div>
 						<div class="zmodule_desc hidden description_wildcard">
-							<: Add the selected Domain as an Wildcard certificate :>
+							<: Add the selected Domain as a Wildcard certificate :>
 						</div>
 					</div>
 				<% endif %>
