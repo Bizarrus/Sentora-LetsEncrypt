@@ -313,7 +313,7 @@
 				</div>
 			<% else %>
 				<% if HasAndyDomains %>
-					<div class="panel-heading" id="title">
+					<div class="panel-heading<% if IsSettingsTab %> hidden<% endif %>" id="title">
 						<img src="modules/letsencrypt/assets/add.png" width="35" height="35" border="0" alt="<: Add :>" />
 						<div class="zmodule_title description_single">
 							<: Add a Single-Domain :>
@@ -401,16 +401,22 @@
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			$('button#create').each(function(index, button) {
 				if(e.target.href.indexOf('#wildcard') > -1) {
-					$('div.description_single').addClass('hidden');
-					$('div.description_wildcard').removeClass('hidden');
 					$('input[name="tab"]').val('wildcard');
 				} else {
-					$('div.description_single').removeClass('hidden');
-					$('div.description_wildcard').addClass('hidden');
 					$('input[name="tab"]').val('single');
 				}
 			});
+			
+			if(e.target.href.indexOf('#single') > -1) {
+				$('div.description_single').removeClass('hidden');
+				$('div.description_wildcard').addClass('hidden');
+			}
 		
+			if(e.target.href.indexOf('#wildcard') > -1) {
+				$('div.description_single').addClass('hidden');
+				$('div.description_wildcard').removeClass('hidden');
+			}
+			
 			if(e.target.href.indexOf('#settings') > -1) {
 				$('div#domain_list, div#title').addClass('hidden');
 			} else {
