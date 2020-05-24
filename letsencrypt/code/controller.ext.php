@@ -694,15 +694,31 @@
 			global $zdbh;
 			
 			$user		= ctrl_users::GetUserDetail();
-			$template	= ($create ? str_replace([
-				'$PATH',
-				'$USER',
-				'$DOMAIN'
-			], [
-				ctrl_options::GetSystemOption('hosted_dir'),
-				$user['username'],
-				$domain
-			], file_get_contents(dirname(__FILE__, 2) . '/vhost.template')) : NULL);
+			
+			if(sys_versions::ShowOSPlatformVersion() !== 'Windows')
+				{
+				$template	= ($create ? str_replace([
+					'$PATH',
+					'$USER',
+					'$DOMAIN'
+				], [
+					ctrl_options::GetSystemOption('hosted_dir'),
+					$user['username'],
+					$domain
+				], file_get_contents(dirname(__FILE__, 2) . '/vhost.template')) : NULL);
+				}
+			else
+				{
+						$template	= ($create ? str_replace([
+						'$PATH',
+						'$USER',
+						'$DOMAIN'
+					], [
+						ctrl_options::GetSystemOption('hosted_dir'),
+						$user['username'],
+						$domain
+					], file_get_contents('C:/Sentora/panel/modules/letsencrypt/vhost.template')) : NULL);
+				 }
 			
 			
 			$zdbh->prepare('UPDATE `x_vhosts` SET `vh_custom_tx`=:template, `vh_custom_port_in`=:port, `vh_portforward_in`=:forward WHERE `vh_name_vc`=:domain')->execute([
